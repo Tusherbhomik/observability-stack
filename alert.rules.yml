@@ -1,0 +1,21 @@
+groups:
+  - name: app_alerts
+    interval: 10s
+    rules:
+      - alert: HighCPUUsage
+        expr: app_cpu_usage > 70
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage detected"
+          description: "CPU usage is {{ $value }}% (threshold: 70%)"
+
+      - alert: AppDown
+        expr: up{job="demo-app"} == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Application is down"
+          description: "The demo app is not responding"
